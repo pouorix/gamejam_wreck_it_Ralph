@@ -14,6 +14,8 @@ public class brickPlacerLogic : MonoBehaviour
     public Text Score;
     public GameObject parent;
     public GameObject deathMenu;
+    public GameObject ralph1;
+    public GameObject ralph2;
     void Start()
     {
         currentTimerValue = timerMaxTime;
@@ -30,6 +32,8 @@ public class brickPlacerLogic : MonoBehaviour
             }
             else
             {
+                ralph1.SetActive(!ralph1.activeSelf);
+                ralph2.SetActive(!ralph2.activeSelf);
                 GameObject newObject = Instantiate(prefabs, new Vector3(GetRandomPrefabInitialX(), 30, transform.position.z), Quaternion.identity) as GameObject;
                 newObject.transform.SetParent(parent.transform);
                 newObject.transform.position = new Vector3(GetRandomPrefabInitialX(), 0.2f, 0);

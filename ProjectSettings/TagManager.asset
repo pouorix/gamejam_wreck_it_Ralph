@@ -8,6 +8,8 @@ TagManager:
   - ground
   - broken
   - brick
+  - deathZone
+  - ralph
   layers:
   - Default
   - TransparentFX

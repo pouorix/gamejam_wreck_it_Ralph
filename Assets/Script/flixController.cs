@@ -13,6 +13,7 @@ public class flixController : MonoBehaviour
     public float jumpAmount = 0.5f;
     private bool canJunp;
     private bool nearBroken;
+    private bool nearRalph;
     private GameObject brokenGameObject;
     private int fixesCounter;
     private GameObject[] brokensGlasses;
@@ -24,11 +25,13 @@ public class flixController : MonoBehaviour
     public GameObject Heart1;
     public Text score2;
     public GameObject DeathMenu;
+    public GameObject WinMenu;
     void Start()
     {
         moveVector = new Vector3(1 * factor, 0, 0);
         canJunp = true;
         nearBroken = false;
+        nearRalph = false;
         fixesCounter = 0;
         localScore = 0;
         health = 3;
@@ -62,15 +65,23 @@ public class flixController : MonoBehaviour
             rb.AddForce(transform.up * jumpAmount, ForceMode2D.Impulse);
             canJunp = false;
         }
-        if (Input.GetKeyDown(KeyCode.Z)  && nearBroken)
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-           // brokenGameObject.SetActive(false);
-            brokenGameObject.transform.position = new Vector3(brokenGameObject.transform.position.x, brokenGameObject.transform.position.y, -100000);
-            fixesCounter++;
-            localScore++;
-            score.text = localScore.ToString();
-            score2.text = localScore.ToString();
-            nearBroken = false;
+            if (nearBroken)
+            {
+                brokenGameObject.transform.position = new Vector3(brokenGameObject.transform.position.x, brokenGameObject.transform.position.y, -100000);
+                fixesCounter++;
+                localScore++;
+                score.text = localScore.ToString();
+                score2.text = localScore.ToString();
+                nearBroken = false;
+            }
+
+            if (nearRalph)
+            {
+                WinMenu.SetActive(true);
+            }
+
         }
 
         if (fixesCounter%8==0 && fixesCounter!=0)
@@ -102,8 +113,12 @@ public class flixController : MonoBehaviour
         if (other.gameObject.CompareTag("brick") )
         {
             health--;
+            Destroy(other.gameObject);
             updateHeartUI();
-            Destroy(other);
+        }
+        if (other.gameObject.CompareTag("ralph") )
+        {
+            nearRalph = true;
         }
     }
 
@@ -113,6 +128,10 @@ public class flixController : MonoBehaviour
         {
             nearBroken = false;
             brokenGameObject = null;
+        }
+        if (other.gameObject.CompareTag("ralph"))
+        {
+            nearRalph = false;
         }
     }
     private void updateHeartUI()
