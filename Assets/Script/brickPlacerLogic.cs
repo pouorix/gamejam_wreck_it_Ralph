@@ -13,6 +13,7 @@ public class brickPlacerLogic : MonoBehaviour
     private float currentTimerValue;
     public Text Score;
     public GameObject parent;
+    public GameObject deathMenu;
     void Start()
     {
         currentTimerValue = timerMaxTime;
@@ -21,22 +22,25 @@ public class brickPlacerLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(currentTimerValue);
-        if (currentTimerValue > 0)
+        if (!deathMenu.activeSelf)
         {
-            currentTimerValue -= Time.deltaTime;
-        }
-        else
-        {
-            GameObject newObject = Instantiate(prefabs, new Vector3(GetRandomPrefabInitialX(), 30, transform.position.z), Quaternion.identity) as GameObject;
-            newObject.transform.SetParent(parent.transform);
-            newObject.transform.position = new Vector3(GetRandomPrefabInitialX(), 0.2f, 0);
-            //newObject.transform.localScale = new Vector3(1, 1, 1);
-            UpdateTimerValueBasedOnScore();
+            if (currentTimerValue > 0)
+            {
+                currentTimerValue -= Time.deltaTime;
+            }
+            else
+            {
+                GameObject newObject = Instantiate(prefabs, new Vector3(GetRandomPrefabInitialX(), 30, transform.position.z), Quaternion.identity) as GameObject;
+                newObject.transform.SetParent(parent.transform);
+                newObject.transform.position = new Vector3(GetRandomPrefabInitialX(), 0.2f, 0);
+                //newObject.transform.localScale = new Vector3(1, 1, 1);
+                UpdateTimerValueBasedOnScore();
 
-            // reset timer
-            currentTimerValue = timerMaxTime;
+                // reset timer
+                currentTimerValue = timerMaxTime;
+            }
         }
+
     }
     private void UpdateTimerValueBasedOnScore()
     {

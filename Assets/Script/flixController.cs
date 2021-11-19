@@ -18,6 +18,12 @@ public class flixController : MonoBehaviour
     private GameObject[] brokensGlasses;
     public Text score;
     private int localScore;
+    private int health;
+    public GameObject Heart3;
+    public GameObject Heart2;
+    public GameObject Heart1;
+    public Text score2;
+    public GameObject DeathMenu;
     void Start()
     {
         moveVector = new Vector3(1 * factor, 0, 0);
@@ -25,6 +31,7 @@ public class flixController : MonoBehaviour
         nearBroken = false;
         fixesCounter = 0;
         localScore = 0;
+        health = 3;
     }
 
     // Update is called once per frame
@@ -62,6 +69,7 @@ public class flixController : MonoBehaviour
             fixesCounter++;
             localScore++;
             score.text = localScore.ToString();
+            score2.text = localScore.ToString();
             nearBroken = false;
         }
 
@@ -91,6 +99,12 @@ public class flixController : MonoBehaviour
             nearBroken = true;
             brokenGameObject = other.gameObject;
         }
+        if (other.gameObject.CompareTag("brick") )
+        {
+            health--;
+            updateHeartUI();
+            Destroy(other);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -99,6 +113,39 @@ public class flixController : MonoBehaviour
         {
             nearBroken = false;
             brokenGameObject = null;
+        }
+    }
+    private void updateHeartUI()
+    {
+        int playerHeartsCount = health;
+        if (playerHeartsCount == 3)
+        {
+            Heart3.SetActive(true);
+            Heart2.SetActive(true);
+            Heart1.SetActive(true);
+        }
+
+        else if (playerHeartsCount == 2)
+        {
+            Heart3.SetActive(false);
+            Heart2.SetActive(true);
+            Heart1.SetActive(true);
+        }
+
+        else if (playerHeartsCount == 1)
+        {
+            Heart3.SetActive(false);
+            Heart2.SetActive(false);
+            Heart1.SetActive(true);
+        }
+        else if (playerHeartsCount == 0)
+        {
+            Heart3.SetActive(false);
+            Heart2.SetActive(false);
+            Heart1.SetActive(false);
+            DeathMenu.SetActive(true);
+            //player.moveAmount=0f;
+           transform.position=new Vector3(10000, 10000, 1000);
         }
     }
 
