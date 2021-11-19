@@ -26,6 +26,7 @@ public class flixController : MonoBehaviour
     public Text score2;
     public GameObject DeathMenu;
     public GameObject WinMenu;
+    public AudioSource mainAudio;
     void Start()
     {
         moveVector = new Vector3(1 * factor, 0, 0);
@@ -80,6 +81,7 @@ public class flixController : MonoBehaviour
             if (nearRalph)
             {
                 WinMenu.SetActive(true);
+                mainAudio.mute = true;
             }
 
         }
@@ -163,6 +165,7 @@ public class flixController : MonoBehaviour
             Heart2.SetActive(false);
             Heart1.SetActive(false);
             DeathMenu.SetActive(true);
+            mainAudio.mute = true;
             //player.moveAmount=0f;
            transform.position=new Vector3(10000, 10000, 1000);
         }

@@ -14,6 +14,7 @@ public class brickPlacerLogic : MonoBehaviour
     public Text Score;
     public GameObject parent;
     public GameObject deathMenu;
+    public GameObject winMenu;
     public GameObject ralph1;
     public GameObject ralph2;
     void Start()
@@ -24,7 +25,7 @@ public class brickPlacerLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!deathMenu.activeSelf)
+        if (!deathMenu.activeSelf && !winMenu.activeSelf)
         {
             if (currentTimerValue > 0)
             {
